@@ -1,4 +1,4 @@
-'''
+"""
 -----------------------------------------------------------------------
 File: latex_ops.py
 Creation Time: Nov 24th 2023 3:29 am
@@ -6,12 +6,13 @@ Author: Saurabh Zinjad
 Developer Email: zinjadsaurabh1997@gmail.com
 Copyright (c) 2023 Saurabh Zinjad. All rights reserved | GitHub: Ztrimus
 -----------------------------------------------------------------------
-'''
+"""
 
 import os
 import jinja2
 import streamlit as st
 from zlm.utils.utils import write_file, save_latex_as_pdf
+
 
 def escape_for_latex(data):
     if isinstance(data, dict):
@@ -36,7 +37,7 @@ def escape_for_latex(data):
             "\\": r"\textbackslash{}",
             "\n": "\\newline%\n",
             "-": r"{-}",
-            "\xA0": "~",  # Non-breaking space
+            "\xa0": "~",  # Non-breaking space
             "[": r"{[}",
             "]": r"{]}",
         }
@@ -44,10 +45,11 @@ def escape_for_latex(data):
 
     return data
 
+
 def latex_to_pdf(json_resume, dst_path):
     try:
         module_dir = os.path.dirname(__file__)
-        templates_path = os.path.join(os.path.dirname(module_dir), 'templates')
+        templates_path = os.path.join(os.path.dirname(module_dir), "templates")
 
         latex_jinja_env = jinja2.Environment(
             block_start_string="\BLOCK{",
@@ -67,7 +69,10 @@ def latex_to_pdf(json_resume, dst_path):
 
         resume_latex = use_template(latex_jinja_env, escaped_json_resume)
 
-        tex_temp_path = os.path.join(os.path.realpath(templates_path), os.path.basename(dst_path).replace(".pdf", ".tex"))
+        tex_temp_path = os.path.join(
+            os.path.realpath(templates_path),
+            os.path.basename(dst_path).replace(".pdf", ".tex"),
+        )
 
         write_file(tex_temp_path, resume_latex)
         save_latex_as_pdf(tex_temp_path, dst_path)
@@ -75,6 +80,7 @@ def latex_to_pdf(json_resume, dst_path):
     except Exception as e:
         print(e)
         return None
+
 
 def use_template(jinja_env, json_resume):
     try:
