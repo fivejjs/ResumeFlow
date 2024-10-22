@@ -20,9 +20,9 @@ from zlm.utils.utils import display_pdf, download_pdf, read_file, read_json
 from zlm.utils.metrics import jaccard_similarity, overlap_coefficient, cosine_similarity
 from zlm.variables import LLM_MAPPING
 
-print("Installing playwright...")
-os.system("playwright install")
-os.system("sudo playwright install-deps")
+print("make sure playwright installed properly...")
+# os.system("playwright install") # install manually
+# os.system("sudo playwright install-deps")
 
 st.set_page_config(
     page_title="Resume Generator",
@@ -34,8 +34,8 @@ st.set_page_config(
     },
 )
 
-if os.path.exists("output"):
-    shutil.rmtree("output")
+# if os.path.exists("output"):
+#     shutil.rmtree("output")
 
 
 def encode_tex_file(file_path):
